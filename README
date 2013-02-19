@@ -6,6 +6,6 @@ Aby przemienić tekst w plik obml w wersji 4, wywołaj polecenie „python2 txtN
 
 Aby odczytać plik obml w wersji 4, pobierz plik odczyt_obml.html, otwórz go w przeglądarcce i wskaż ten plik.
 
-Aby przemienić plik obml, wywołaj polecenie „python2 obml<WERSJA>NaSvgIHtml.py plik.txt”
+Aby przemienić plik obml w stronę html, wywołaj polecenie „python3 obml<WERSJA>NaSvgIHtml.py plik.obml plik2.obml …”
 
-Z plików coffee tworzy się kod js, np. na stronie coffeescript.org .
+Z plików coffee tworzy się kod js, np. na stronie coffeescript.org. Dopóki nie chcesz ulepszać kodu, nie są Ci potrzebne.
