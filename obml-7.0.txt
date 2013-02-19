@@ -1,0 +1,73 @@
+Opis języka dwójkowych znaczników Opery (w wersji 7.0)
+
+Długość, odległość itp. podawane są w bajtach(to ważne dla znaków zapisywanych na więcej, niż jednym bajcie, np. ł.
+
+Na plik składają się następujące części:
+
+* 8 bajtów
+* szerokość strony (2 bajty)
+* wysokość strony (3 bajty)
+* 2 bajty
+* długość tytułu (2 bajty)
+* tytuł strony
+* długość porcji danych (2 bajty)
+* porcja danych
+* długość części wspólnej łącz (2 bajty)
+* część wspólna łącz
+* długość adresu strony (2 bajty)
+* adres strony: 00 oznacza część wspólną
+* 5 bajtów
+* znaczniki M
+    - MC - 3 bajty długości danych - dane
+    - Mu - 9 bajtów
+    - MT - 3 bajty długości danych - dane (favikona w formacie tga?)
+* znacznik S, 4 bajty
+* znaczniki L, N i I
+* krótki znacznik L?
+* znaczniki B
+* znaczniki T, B i I
+
+Znane rodzajów znaczników: T, B, L, I, S, i, N, M, F.
+Na znaczniki skaładają się kolejno: jego nazwa i dane o różnej długości (brak nawiasów itp.)
+
+Dane znacznika T: (coś jak <text></text>)
+    - 2 bajty, odległość od początku strony w poziomie
+    - 3 bajty, odległość od początku strony w pionie
+    - 2 bajty, szerokość tekstu
+    - 3 bajty, wysokość tekstu
+    - 1 bajt, krycie
+    - 3 bajty, kolor RGB
+    - 1 bajt formatujący. 1 oznacza pogrubienie, 2 powiększenie, 4 delikatne powiększenie. Liczby sumują się.
+    - 2 bajty, długość następującego tekstu
+    - Tekst (w kodowaniu utf-8?). Znakiem nowej linii jest LF (0a).
+Dane znacznika B: (coś jak <rect/>)
+    - 2 bajty, odległość od początku strony w poziomie
+    - 3 bajty, odległość od początku strony w pionie
+    - 2 bajty, szerokość
+    - 3 bajty, wysokość
+    - 1 bajt, krycie?
+    - 3 bajty, kolor rgb
+Dane znacznika L: (coś jak <a></a>)
+    - 1 bajt, liczba wystąpień
+    (=powtarzane odtąd=
+    - 2 bajty, odległość od początku strony w poziomie
+    - 3 bajty, odległość od początku strony w pionie
+    - 2 bajty, szerokość
+    - 3 bajty, wysokość
+    =powtarzane dotąd=)
+    - 3 bajty, długość adresu celu
+    - adres celu (00 — część wspólna)
+Dane znacznika I:
+    - 2 bajty, odległość od początku strony w poziomie
+    - 3 bajty, odległość od początku strony w pionie
+    - 2 bajty, szerokość
+    - 3 bajty, wysokość
+    - 1 bajt, krycie
+    - 3 bajty, kolor RGB, używany gdy brak obrazka
+    - 6 bajtów, miejsce w danych
+Dane znacznika S:
+    - 3 bajty długości wszystkich obrazków, łącznie z opisami ich długości
+    (=powtarzane odtąd=
+    - 2 bajty długości pliku
+    - plik
+    =powtarzane dotąd=)

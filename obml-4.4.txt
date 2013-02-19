@@ -1,0 +1,152 @@
+Opis języka dwójkowych znaczników Opery (w wersji 4.4)
+
+Niniejszy opis nie jest tak dokładny jak kod programu, pozwala jedynie na ogólne rozeznanie w zawartości plików.
+Długość, odległość itp. podawane są w bajtach. To ważne dla znaków zapisywanych na więcej niż jednym bajcie, np. ł.
+
+Na plik składają się następujące części:
+
+* długość pliku bez samego określenia długości — 3 bajty
+* stała, może wersja formatu pliku: XII
+* szerokość strony — 2 bajty
+* wysokość strony — 3 bajty
+* porcja I — 5 bajtów: LXXXIII 0 0 CCLV CCLV
+* długość tytułu — 2 bajty
+* tytuł strony
+* długość favikony — 2 bajty
+* favikona
+* długość wspólnej części adresów — 2 bajty
+* wspólna część adresów
+* długość adresu strony — 2 bajty
+* adres strony: 0 oznacza część wspólną
+* porcja III — 5 bajtów
+* znaczniki M
+    - MC — 3 bajty długości danych - dane: w każdym pliku
+    - Mu — 7 bajtów: w każdym pliku
+    - MT — 3 bajty długości danych - dane: w niektórych plikach
+    - MS — o certyfikacie: w niektórych plikach
+        + 3 bajty długości
+        (=powtarzane odtąd, dla następujących pól: Właściciel, Organizacja, Wystawca, Wygasa, „Gadka”, Protokół, Domena
+        + długość — 2 bajty
+        + zawartość
+        =powtarzane dotąd=)
+* znacznik S jako czoło łącz — 3 bajty
+* rozwijki
+* znaczniki P, L, N i I jako pole
+* krótki znacznik L
+* znaczniki B, T i I jako obraz
+* znacznik S jako plecak
+
+
+Znane znaczniki: T, B, L, I jako obraz lub pole, S jako plecak lub guzik, i, N, M, F, P, C.
+Na znaczniki skaładają się kolejno: jego nazwa i dane o różnej długości (nie ma żadnych nawiasów itp.)
+
+Dane znacznika T: (coś jak <text></text>)
+    - 2 bajty, odległość od początku strony w poziomie
+    - 3 bajty, odległość od początku strony w pionie
+    - 2 bajty, szerokość tekstu
+    - 3 bajty, wysokość tekstu
+    - 1 bajt, stały: CCLV
+    - 3 bajty, kolor w postaci rgb
+    - 1 bajt, opis wyglądu. 1 oznacza pogrubienie, 2 powiększenie, 4 delikatne powiększenie. Liczby sumują się.
+    - 2 bajty, długość następującego tekstu
+    - Tekst w kodowaniu utf-8. Znakiem nowej linii jest LF (0a).
+Dane znacznika B: (coś jak <rect/>)
+    - 2 bajty, odległość od początku strony w poziomie
+    - 3 bajty, odległość od początku strony w pionie
+    - 2 bajty, szerokość
+    - 3 bajty, wysokość
+    - 1 bajt, stały: CCLV
+    - 3 bajty, kolor w postaci rgb
+Dane znacznika L: (coś jak <a></a>)
+    - 1 bajt, liczba powtórzeń
+    (=powtarzane odtąd=
+    - 2 bajty, odległość od początku strony w poziomie
+    - 3 bajty, odległość od początku strony w pionie
+    - 2 bajty, szerokość
+    - 3 bajty, wysokość
+    =powtarzane dotąd=)
+    - 3 bajty, długość adresu celu
+    - adres celu (0 oznacza część wspólną)
+Dane znacznika I jako obrazu: (coś jak <image/>)
+    - 2 bajty, odległość od początku strony w poziomie
+    - 3 bajty, odległość od początku strony w pionie
+    - 2 bajty, szerokość
+    - 3 bajty, wysokość
+    - 1 bajt
+    - 3 bajty, przeważający kolor obrazka w postaci rgb
+    - 3 bajty
+    - 3 bajty, miejsce w plecaku
+Dane znacznika S jako plecaka: (coś jak tar)
+    - 3 bajty długości plecaka (bez samej długości)
+    (=powtarzane odtąd=
+    - 2 bajty długości pliku
+    - plik
+    =powtarzane dotąd=)
+Dane znacznika N: (coś jak <a href="#"></a>)
+    - 1 bajt, liczba powtórzeń
+    (=powtarzane odtąd=
+    - 2 bajty, odległość łącza od początku strony w poziomie
+    - 3 bajty, odległość łącza od początku strony w pionie
+    - 2 bajty, szerokość łącza
+    - 3 bajty, wysokość łącza
+    =powtarzane dotąd=)
+    - 2 bajty
+    - 2 bajty, długość opisu celu
+    - 2 bajty, odległość celu od początku strony w poziomie
+    - 3 bajty, odległość celu od początku strony w pionie
+    - 2 bajty, długość nazwy celu
+    - nazwa celu
+Dane znacznika P: (coś jak <a href="numer telefonu"></a>)
+    - 1 bajt, liczba powtórzeń
+    (=powtarzane odtąd=
+    - 2 bajty, odległość od początku strony w poziomie
+    - 3 bajty, odległość od początku strony w pionie
+    - 2 bajty, szerokość łącza
+    - 3 bajty, wysokość łącza
+    =powtarzane dotąd=)
+    - 2 bajty
+    - 2 bajty, długość adresu z numerem
+    - adres z numerem w postaci tel:<numer>
+Dane znacznika S jako przycisku: (coś jak <input type=submit> w html)
+    - 1 bajt, liczba wystąpień
+    (=powtarzane odtąd=
+    - 2 bajty, odległość od początku strony w poziomie
+    - 3 bajty, odległość od początku strony w pionie
+    - 2 bajty, szerokość
+    - 3 bajty, wysokość
+    =powtarzane dotąd=)
+    - 3 bajty, może Javascript
+    - 1 bajt, długość wyróżnika
+    - wyróżnik
+Dane znacznika F: (coś jak input, textarea, select w html)
+    - 2 bajty, odległość od początku strony w poziomie
+    - 3 bajty, odległość od początku strony w pionie
+    - 2 bajty, szerokość
+    - 3 bajty, wysokość
+    - 1 bajt
+    - 3 bajty, kolor w postaci RGB
+    - 1 bajt, rodzaj pola:
+        * XCVII - textarea
+        * XCIX - input type=checkbox
+        * CXII - input type=password
+        * CXIV - input type=radio
+        * CXV - select
+        * CXX - input type=text
+    - 1 bajt
+    - 2 bajty, długość czegoś
+    - coś
+    - 2 bajty, długość czegoś innego
+    - coś innego
+    - 3 bajty
+    - 1 bajt
+Dane znacznika C:
+    - 21 bajtów
+Dane znacznika i:
+    - 1 bajt: liczba powtórzeń
+    (=powtarzane odtąd=
+    - 10 bajtów
+    =powtarzane dotąd=)
+    - 2 bajty: długość typu mime
+    - typ mime
+    - 2 bajty: długość adresu
+    - adres
