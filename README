@@ -1,0 +1,11 @@
+Aby zapisać obml w wersji 4 przy pomocy html2canvas:
+- skopiuj do folderu skryptów użytkownika pliki html2canvas.js i kreślidło_obml.js
+- dodaj zakładkę: „javascript:(function(){zbudujObml()})()” i wywołaj na dowolnej stronie
+
+Aby przemienić tekst w plik obml w wersji 4, wywołaj polecenie „python2 txtNaObml.py plik.txt”
+
+Aby odczytać plik obml w wersji 4, pobierz plik odczyt_obml.html, otwórz go w przeglądarcce i wskaż ten plik.
+
+Aby przemienić plik obml, wywołaj polecenie „python2 obml<WERSJA>NaSvgIHtml.py plik.txt”
+
+Z plików coffee tworzy się kod js, np. na stronie coffeescript.org .
